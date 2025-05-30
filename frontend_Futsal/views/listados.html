@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listados de asistencia</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilo del contenedor principal */
+        h1 {
+            text-align: center;
+            color: #4a90e2;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #4a90e2;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .action-buttons {
+            text-align: center;
+        }
+
+        /* Estilos para los botones */
+        button {
+            padding: 8px 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.edit-btn {
+            background-color: #4a90e2;
+            color: white;
+        }
+
+        button.status-btn {
+            background-color: #ffcc66;
+            color: black;
+        }
+        .status-btn.asistio {
+        background-color: #28a745; /* Verde */
+        color: white;
+        }
+
+        .status-btn.inasistencia {
+            background-color: #dc3545; /* Rojo */
+            color: white;
+        }
+
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        button.save-btn {
+            background-color: #ffcc66; /* Color de fondo del botón */
+            color: white; /* Color del texto */
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            table {
+                font-size: 16px;
+            }
+
+            button {
+                font-size: 14px;
+            }
+        }
+
+        /* Estilos para el modal de edición */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Estilos para los iconos en el header */
+        .header-icons {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .header-icons a {
+            display: inline-block;
+            margin-left: 15px;
+        }
+
+        .header-icons img {
+            width: 70px; /* Aumentar el tamaño de los íconos */
+            height: 70px; /* Aumentar el tamaño de los íconos */
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="../css/image/logo-light-transparent.png" alt="Logo app">
+        </div>
+        <nav>
+            <a href="../views/indexEntrenador.html">INICIO</a>
+            <a href="calendario.html">CALENDARIO</a>
+            <a href="reviewsA.html">GESTIÓN DE RESEÑAS</a>
+            <a href="usersA.html">GESTIÓN DE USUARIOS</a>
+        </nav>
+        <div class="header-icons">
+            <a href="profileA.html"><img id="header-profile-icon" src="../css/image/icon-profile.png" alt="Perfil"></a>
+        </div>
+        <div class="contact-info">
+            <a href="#" class="contact-button" id="logoutBtn">Cerrar Sesión</a>
+        </div>
+    </header>
+
+    <section class="reviews-section">
+        <div class="title">
+           Listado de asistencia
+        </div>
+    </section>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Categoria</th>
+                <th>Asistencia</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="userTableBody">
+            <!-- Datos de usuarios simulados -->
+            <tr>
+                <td>1</td>
+                <td>Juan Pérez</td>
+                <td>juan.perez@example.com</td>
+                <td>Prejuvenil</td>
+                <td><span class="status">Asistio</span></td>
+                <td class="action-buttons">
+                    <button class="edit-btn" onclick="openEditModal(this)">Editar</button>
+                    <button class="status-btn" onclick="toggleStatus(this)">✅</button>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>María López</td>
+                <td>maria.lopez@example.com</td>
+                <td>Unica</td>
+                <td><span class="status">Inasistencia</span></td>
+                <td class="action-buttons">
+                    <button class="edit-btn" onclick="openEditModal(this)">Editar</button>
+                    <button class="status-btn" onclick="toggleStatus(this)">✅</button>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Carlos Sánchez</td>
+                <td>carlos.sanchez@example.com</td>
+                <td>Juvenil</td>
+                <td><span class="status">Asistio</span></td>
+                <td class="action-buttons">
+                    <button class="edit-btn" onclick="openEditModal(this)">Editar</button>
+                    <button class="status-btn" onclick="toggleStatus(this)">✅</button>
+                </td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Ana Martínez</td>
+                <td>ana.martinez@example.com</td>
+                <td>Iniciacion</td>
+                <td><span class="status">Inasistio</span></td>
+                <td class="action-buttons">
+                    <button class="edit-btn" onclick="openEditModal(this)">Editar</button>
+                    <button class="status-btn" onclick="toggleStatus(this)">✅</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Modal para editar usuario -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <h2>Editar Usuario</h2>
+            <input type="text" id="editName" placeholder="Nombre">
+            <input type="email" id="editEmail" placeholder="Email">
+            <input type="text" id="editRole" placeholder="Categoria">
+            <button onclick="saveChanges()">Guardar Cambios</button>
+        </div>
+    </div>
+
+    <script>
+        let currentRow;
+
+        function toggleStatus(button) {
+    const row = button.closest('tr');
+    const statusSpan = row.querySelector('.status');
+    const userId = row.cells[0].textContent; // ID del usuario
+
+    if (statusSpan.textContent === "Asistio") {
+        statusSpan.textContent = "Inasistencia";
+        button.textContent = "❌";
+        button.classList.remove("asistio");
+        button.classList.add("inasistencia");
+        localStorage.setItem(`asistencia_${userId}`, "inasistencia");
+    } else {
+        statusSpan.textContent = "Asistio";
+        button.textContent = "✅";
+        button.classList.remove("inasistencia");
+        button.classList.add("asistio");
+        localStorage.setItem(`asistencia_${userId}`, "asistio");
+    }
+}
+
+
+
+        function openEditModal(button) {
+            currentRow = button.closest('tr');
+            const name = currentRow.cells[1].textContent;
+            const email = currentRow.cells[2].textContent;
+            const role = currentRow.cells[3].textContent;
+
+            document.getElementById('editName').value = name;
+            document.getElementById('editEmail').value = email;
+            document.getElementById('editRole').value = categoria;
+
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        function saveChanges() {
+            const name = document.getElementById('editName').value;
+            const email = document.getElementById('editEmail').value;
+            const role = document.getElementById('editRole').value;
+
+            currentRow.cells[1].textContent = name;
+            currentRow.cells[2].textContent = email;
+            currentRow.cells[3].textContent = categoria;
+
+            closeEditModal();
+        }
+        window.addEventListener('DOMContentLoaded', () => {
+    const rows = document.querySelectorAll('#userTableBody tr');
+
+    rows.forEach(row => {
+        const userId = row.cells[0].textContent;
+        const savedStatus = localStorage.getItem(`asistencia_${userId}`);
+        const statusSpan = row.querySelector('.status');
+        const button = row.querySelector('.status-btn');
+
+        if (savedStatus === "inasistencia") {
+            statusSpan.textContent = "Inasistencia";
+            button.textContent = "❌";
+            button.classList.remove("asistio");
+            button.classList.add("inasistencia");
+        } else {
+            statusSpan.textContent = "Asistio";
+            button.textContent = "✅";
+            button.classList.remove("inasistencia");
+            button.classList.add("asistio");
+        }
+    });
+});
+
+    </script>
+
+<div class="modal" id="logoutModal">
+    <div class="modal-content">
+        <h2>Confirmar Cierre de Sesión</h2>
+        <p>¿Estás seguro de que deseas cerrar sesión?</p>
+        <button class="btn" id="confirmLogoutBtn">Sí, cerrar sesión</button>
+        <button class="btn cancel" id="cancelLogoutBtn">Cancelar</button>
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>¡Estamos aquí para ayudarte!</h3>
+                <p>📅 <strong>Lunes, miercoles y Viernes:</strong> 4:30 PM - 7:00 PM<br>
+            </div>
+            
+          <div class="footer-section">
+            <h3><img src="../css/image/logo-light-transparent.png" alt="Logo"></h3>
+            <div class="social-icons">
+              <a href="#"><img src="../css/image/faceb.png" alt="Facebook"></a>
+              <a href="#"><img src="../css/image/whats.png" alt="WhatsApp"></a>
+              <a href="#"><img src="../css/image/insta.png" alt="Instagram"></a>
+            </div>
+          </div>
+          <div class="footer-section contact-us">
+            <h3>Correo institucional:
+                contactenos@lacalera-cundinamarca.gov.co
+                notificacionjudicial@lacalera-cundinamarca.gov.co
+                </h3>
+          </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Asesorado, diseñado y desarrollado por: NYS. © 2024 </p>
+            <p><a href="#">Política de Privacidad</a> | <a href="#">Términos y Condiciones</a></p>
+        </div>
+      </footer>  
+    <script src="../js/script.js"></script>
+</body>
+</html>

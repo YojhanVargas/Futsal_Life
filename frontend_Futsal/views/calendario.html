@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendaro de Citas - PetMatch</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        #contact-info {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+        #calendar-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+        }
+        #event-list-container {
+            width: 25%;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        #event-list-container ul {
+            list-style: none;
+            padding: 0;
+        }
+        .event {
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .event.dragging {
+            opacity: 0.5;
+        }
+        #create-event-container {
+            margin-top: 20px;
+        }
+        #create-event-container input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        #create-event-container select {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        #create-event-container button {
+            width: 100%;
+            padding: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #create-event-container button:hover {
+            background-color: #45a049;
+        }
+        #calendar-table {
+            width: 70%;
+            border-collapse: collapse;
+            margin-left: 170px;
+        }
+        #calendar-table th, #calendar-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            vertical-align: top;
+        }
+        #calendar-table th {
+            font-weight: bold;
+            background-color: #f2f2f2;
+            text-align: center;
+            padding: 10px;
+        }
+        .droppable {
+            min-height: 100px;
+            position: relative;
+        }
+        .event-inside {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            width: 90%;
+        }
+        /* Estilos para los iconos en el header */
+        .header-icons {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .header-icons a {
+            display: inline-block;
+            margin-left: 15px;
+        }
+
+        .header-icons img {
+            width: 70px; /* Aumentar el tamaño de los íconos */
+            height: 70px; /* Aumentar el tamaño de los íconos */
+            cursor: pointer;
+        }
+
+        #calendar-table-container {
+            width: 100%; /* Ajusta según el tamaño que desees */
+            margin: 0 auto; /* Centra el calendario */
+            
+        }
+
+        #calendar-navigation {
+            display: flex;
+            justify-content: center; /* Centra los elementos horizontalmente */
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        #calendar-navigation button {
+            background-color: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #month-name {
+            margin: 0 15px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="../css/image/logo-light-transparent.png">
+        </div>
+        <nav>
+            <a href="indexEntrenador.html">INICIO</a>
+            <a href="../views/petsV.html"></a>
+            <a href="../views/reviewsV.html"></a>
+        </nav>
+        <div class="header-icons">
+            <a href="../views/calendarV.html"><img src="../css/image/icon-calendar.png" alt="Calendario"></a>
+            <a href="../views/profileV.html"><img id="header-profile-icon" src="../css/image/icon-profile.png" alt="Perfil"></a>
+        </div>
+        <div class="contact-info">
+            <a href="#" class="contact-button" id="logoutBtn">Cerrar Sesión</a>
+        </div>
+    </header>
+
+    <div class="modal" id="logoutModal">
+        <div class="modal-content">
+            <h2>Confirmar Cierre de Sesión</h2>
+            <p>¿Estás seguro de que deseas cerrar sesión?</p>
+            <button class="btn" id="confirmLogoutBtn">Sí, cerrar sesión</button>
+            <button class="btn cancel" id="cancelLogoutBtn">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="calendar-container">
+        <div id="event-list-container">
+            <h2>Eventos</h2>
+            <ul id="event-list">
+                <li class="event" style="background-color: #4CAF50;" draggable="true">Entrenamiento</li>
+                <li class="event" style="background-color: #FF9800;" draggable="true">Partidos</li>
+                <li class="event" style="background-color: #F44336;" draggable="true">Eventos cultural</li>
+                <li class="event" style="background-color: #2196F3;" draggable="true">Buscar fecha </li>
+            </ul>
+            <div id="create-event-container">
+                <h3>Crear Evento</h3>
+                <input type="text" id="new-event-name" placeholder="Título Evento">
+                <select id="new-event-color">
+                    <option value="#4CAF50">Verde</option>
+                    <option value="#FF9800">Naranja</option>
+                    <option value="#F44336">Rojo</option>
+                    <option value="#2196F3">Azul</option>
+                    <option value="#9C27B0">Morado</option>
+                    <option value="#00BCD4">Cyan</option>
+                    <option value="#FFC107">Amarillo</option>
+                    <option value="#E91E63">Rosa</option>
+                </select>
+                <button id="add-event">Agregar</button>
+            </div>
+        </div>
+
+        <div id="calendar-table-container">
+            <div id="calendar-navigation">
+                <button id="prev-month">&lt;</button>
+                <span id="month-name"></span>
+                <button id="next-month">&gt;</button>
+            </div>
+        
+
+        <table id="calendar-table">
+            <thead>
+                <tr>
+                    <th>Dom</th>
+                    <th>Lun</th>
+                    <th>Mar</th>
+                    <th>Mié</th>
+                    <th>Jue</th>
+                    <th>Vie</th>
+                    <th>Sáb</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    </div>
+    
+    <script src="../controllers/calendarController.js"></script>
+
+  <footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>¡Estamos aquí para ayudarte!</h3>
+            <p>📅 <strong>Lunes, miercoles y Viernes:</strong> 4:30 PM - 7:00 PM<br>
+        </div>
+        
+      <div class="footer-section">
+        <h3><img src="../css/image/logo-light-transparent.png" alt="Logo"></h3>
+        <div class="social-icons">
+          <a href="#"><img src="../css/image/faceb.png" alt="Facebook"></a>
+          <a href="#"><img src="../css/image/whats.png" alt="WhatsApp"></a>
+          <a href="#"><img src="../css/image/insta.png" alt="Instagram"></a>
+        </div>
+      </div>
+      <div class="footer-section contact-us">
+        <h3>Correo institucional:
+            contactenos@lacalera-cundinamarca.gov.co
+            notificacionjudicial@lacalera-cundinamarca.gov.co
+            </h3>
+      </div>
+    </div>
+    <div class="footer-bottom">
+        <p>Asesorado, diseñado y desarrollado por: NYS. © 2024 </p>
+        <p><a href="#">Política de Privacidad</a> | <a href="#">Términos y Condiciones</a></p>
+    </div>
+</body>
+</html>

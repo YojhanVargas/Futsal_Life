@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La calera Futsal Life</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="../css/image/logo-light-transparent.png" alt="escuela logo">
+        </div>
+        <nav>
+            <a href="./index.html">INICIO</a>
+            <!--<a href="./pets.html">PETS</a>
+            <a href="./reviews.html">RESEÑAS</a> -->
+        </nav>
+        <div class="contact-info">
+            <a href="./login.html" class="contact-button">Registrarse/Iniciar Sesión</a>
+        </div>
+    </header>
+<br>
+<br>
+    <main>
+        <div class="contenedor__todo">
+            <div class="caja__trasera">
+                <div class="caja__trasera-login">
+                    <h3>¿Ya eres parte de nuestra escuela?</h3>
+                    <p>Inicia sesión para ser parte de esta familia</p>
+                    <button id="btn__iniciar-sesion">Iniciar Sesión</button>
+                </div>
+                <div class="caja__trasera-register">
+                    <h3>¿Aún no eres miembro?</h3>
+                    <button id="btn__registrarse">Regístrate</button>
+                </div>
+            </div>
+
+            <!--Formulario de Login y registro-->
+<div class="contenedor__login-register">
+    <!--Login-->
+    <form id="login-form" action="" class="formulario__login" onsubmit="return validarFormularioLogin()">
+        <h2> Iniciar Sesión </h2>
+        
+        <div class="input-container">
+            <label for="login-email">Correo Electrónico</label>
+            <input type="email" id="login-email" required>
+        </div>
+        
+        <div class="input-container">
+            <label for="login-password">Contraseña</label>
+            <div class="password-container">
+                <input type="password" id="login-password" required>
+                <button type="button" class="toggle-password" onclick="togglePassword('login-password')"></button>
+            </div>
+        </div>
+        
+        <div class="input-container">
+            <label for="login-rol">Selecciona tu rol</label>
+            <select id="login-rol" required>
+                <option value="" disabled selected>Selecciona tu rol</option>
+                <option value="cliente">Entrenador</option>
+                <option value="vendedor">Jugador</option>
+                <option value="vendedor">Acudiente</option>
+            </select>
+        </div>
+        
+        <button type="submit">Entrar</button>
+    </form>
+
+    <!--Register-->
+    <form action="" class="formulario__register" onsubmit="return validarFormularioRegistro()">
+        <h2> Regístrate </h2>
+        
+        <div class="input-container">
+            <label for="register-nombre">Nombre</label>
+            <input type="text" id="register-nombre" required>
+        </div>
+         <div class="input-container">
+            <label for="register-nombre">Apellido</label>
+            <input type="text" id="register-nombre" required>
+        </div>
+        
+        <div class="input-container">
+            <label for="register-email">Correo Electrónico</label>
+            <input type="email" id="register-email" required>
+        </div>
+        
+        <div class="input-container">
+            <label for="register-direccion">Dirección</label>
+            <input type="text" id="register-direccion" required>
+        </div>
+        
+        <div class="input-container">
+            <label for="register-telefono">Teléfono Celular</label>
+            <input type="tel" id="register-telefono" required>
+        </div>
+        
+        <div class="input-container">
+            <label for="register-rol">Selecciona Rol</label>
+            <select id="register-rol" required>
+                <option value="" disabled selected>Selecciona Rol</option>
+                <option value="cliente">Entrenador</option>
+                <option value="vendedor">Jugador</option>
+                <option value="vendedor">Acudiente</option>
+            </select>
+        </div>
+        
+        <div class="input-container">
+            <label for="register-password">Contraseña</label>
+            <div class="password-container">
+                <input type="password" id="register-password" required>
+                <button type="button" class="toggle-password" onclick="togglePassword('register-password')">👁️</button>
+            </div>
+        </div>
+        
+        <button type="submit">Regístrate</button>
+    </form>
+</div>
+        </div>
+    </main>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <!-- Scripts -->
+    <script src="../controllers/loginController.js"></script>
+<br>
+<br>
+<br>
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>¡Estamos aquí para ayudarte!</h3>
+            <p>📅 <strong>Lunes, miercoles y Viernes:</strong> 4:30 PM - 7:00 PM<br>
+        </div>
+        
+            
+            <div class="footer-section">
+                <h3><img src="../css/image/logo-light-transparent.png" alt="Logo"></h3>
+                <div class="social-icons">
+                    <a href="#"><img src="../css/image/faceb.png" alt="Facebook"></a>
+                    <a href="#"><img src="../css/image/whats.png" alt="WhatsApp"></a>
+                    <a href="#"><img src="../css/image/insta.png" alt="Instagram"></a>
+                </div>
+            </div>
+            <div class="footer-section contact-us">
+                <h3>Correo institucional:
+                    contactenos@lacalera-cundinamarca.gov.co
+                    notificacionjudicial@lacalera-cundinamarca.gov.co
+                    </h3>
+              </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Asesorado, diseñado y desarrollado por: NYS. © 2024 </p>
+            <p><a href="#">Política de Privacidad</a> | <a href="#">Términos y Condiciones</a></p>
+        </div>
+    </footer> 
+</body>
+</html>

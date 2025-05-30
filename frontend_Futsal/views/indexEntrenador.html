@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futsal Life - Entrenador</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos para los iconos en el header */
+        .header-icons {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .header-icons a {
+            display: inline-block;
+            margin-left: 15px;
+        }
+
+        .header-icons img {
+            width: 70px; /* Aumentar el tamaño de los íconos */
+            height: 70px; /* Aumentar el tamaño de los íconos */
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="../css/image/logo-light-transparent.png" alt="Logo escuela">
+        </div>
+        <nav>
+            <a href="../views/indexEntrenador.html">INICIO</a>
+            <a href="../views/listados.html">LISTADO</a>
+            <a href="../views/petsV.html">CONVOCATORIAS</a>
+            <a href="../views/petsV.html">CATEGORIA</a>
+        </nav>
+        <div class="header-icons">
+            <a href="../views/calendar.html"><img src="../css/image/icon-calendar.png" alt="Calendario"></a>
+            <a href="../views/profile.html"><img id="header-profile-icon" src="../css/image/icon-profile.png" alt="Perfil"></a>
+        </div>
+        <div class="contact-info">
+            <a href="#" class="contact-button" id="logoutBtn">Cerrar Sesión</a>
+        </div>
+    </header>
+
+    <div>
+        <br>
+        <br>
+    </div>
+
+
+    <!-- Sección de contenido con texto e imagen -->
+    <section class="content-section">
+        <div class="text">
+            <h2 class="title">¡Bienvenido a tu Perfil de Entrenador!</h2>
+            <p>En este perfil, puedes gestionar entrenamientos, administrar listados de jugadores, agregar eventos proximos, revisar tus reseñas y mensajes. Asegúrate de mantener tu información actualizada y aprovechar al máximo tu experiencia con Futsal Life.</p>
+        </div>
+        <div class="image-box">
+            <img src="../css/image/entrenamiento.jpg" alt="Imagen de mascotas">
+        </div>
+    </section>
+
+        <!-- Carrusel de imágenes -->
+        <section class="carousel">
+            <div class="carousel-images">
+                <img src="../css/image/torneo1.1.jpg" alt="Imagen 1">
+                <img src="../css/image/gente jugando.jpg" alt="Imagen 2">
+                <img src="../css/image/cancha 2.jpg" alt="Imagen 3">
+                <img src="../css/image/cancha con balon.jpg" alt="Imagen 4">
+            </div>
+        
+            <!-- Enlace al archivo JS -->
+            <script src="../js/carousel.js"></script>
+        </section>
+
+    <!-- Sección con íconos circulares -->
+    <section class="icon-section">
+        <div class="icon-box">
+            <div class="icon">🚸</div>
+            <div class="icon-description">INICIACION</div>
+            <p>Niños y niñas entre las edades de 6 a 11 años.</p>
+        </div>
+        <div class="icon-box">
+            <div class="icon">💬</div>
+            <div class="icon-description">PERFECCIONAMIENTO</div>
+            <p>Niños y niñas entre las edades de 12 a 17 años.</p>
+        </div>
+        <div class="icon-box">
+            <div class="icon">⚽</div>
+            <div class="icon-description">MAYORES</div>
+            <p>Adultos desde los 18 años hasta los 24 años.</p>
+        </div>
+    </section>
+
+    <div class="modal" id="logoutModal">
+        <div class="modal-content">
+            <h2>Confirmar Cierre de Sesión</h2>
+            <p>¿Estás seguro de que deseas cerrar sesión?</p>
+            <button class="btn" id="confirmLogoutBtn">Sí, cerrar sesión</button>
+            <button class="btn cancel" id="cancelLogoutBtn">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>¡Estamos aquí para ayudarte!</h3>
+                <p>📅 <strong>Lunes, miercoles y Viernes:</strong> 4:30 PM - 7:00 PM<br>
+            </div>
+            
+          <div class="footer-section">
+            <h3><img src="../css/image/logo-light-transparent.png" alt="Logo"></h3>
+            <div class="social-icons">
+              <a href="#"><img src="../css/image/faceb.png" alt="Facebook"></a>
+              <a href="#"><img src="../css/image/whats.png" alt="WhatsApp"></a>
+              <a href="#"><img src="../css/image/insta.png" alt="Instagram"></a>
+            </div>
+          </div>
+          <div class="footer-section contact-us">
+            <h3>Correo institucional:
+                contactenos@lacalera-cundinamarca.gov.co
+                notificacionjudicial@lacalera-cundinamarca.gov.co
+                </h3>
+          </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Asesorado, diseñado y desarrollado por: NYS. © 2024 </p>
+            <p><a href="#">Política de Privacidad</a> | <a href="#">Términos y Condiciones</a></p>
+        </div>
+      </footer>  
+    <script src="../js/script.js"></script>
+</body>
+</html>
