@@ -24,8 +24,8 @@
             <a href="./login.html" class="contact-button">Registrarse/Iniciar Sesión</a>
         </div>
     </header>
-<br>
-<br>
+    <br>
+    <br>
     <main>
         <div class="contenedor__todo">
             <div class="caja__trasera">
@@ -41,86 +41,86 @@
             </div>
 
             <!--Formulario de Login y registro-->
-<div class="contenedor__login-register">
-    <!--Login-->
-    <form id="login-form" action="" class="formulario__login" onsubmit="return validarFormularioLogin()">
-        <h2> Iniciar Sesión </h2>
-        
-        <div class="input-container">
-            <label for="login-email">Correo Electrónico</label>
-            <input type="email" id="login-email" required>
-        </div>
-        
-        <div class="input-container">
-            <label for="login-password">Contraseña</label>
-            <div class="password-container">
-                <input type="password" id="login-password" required>
-                <button type="button" class="toggle-password" onclick="togglePassword('login-password')"></button>
-            </div>
-        </div>
-        
-        <div class="input-container">
-            <label for="login-rol">Selecciona tu rol</label>
-            <select id="login-rol" required>
-                <option value="" disabled selected>Selecciona tu rol</option>
-                <option value="cliente">Entrenador</option>
-                <option value="vendedor">Jugador</option>
-                <option value="vendedor">Acudiente</option>
-            </select>
-        </div>
-        
-        <button type="submit">Entrar</button>
-    </form>
+            <div class="contenedor__login-register">
+                <!--Login-->
+                <form id="login-form" action="" class="formulario__login" onsubmit="return validarFormularioLogin()">
+                    <h2> Iniciar Sesión </h2>
 
-    <!--Register-->
-    <form action="" class="formulario__register" onsubmit="return validarFormularioRegistro()">
-        <h2> Regístrate </h2>
-        
-        <div class="input-container">
-            <label for="register-nombre">Nombre</label>
-            <input type="text" id="register-nombre" required>
-        </div>
-         <div class="input-container">
-            <label for="register-nombre">Apellido</label>
-            <input type="text" id="register-nombre" required>
-        </div>
-        
-        <div class="input-container">
-            <label for="register-email">Correo Electrónico</label>
-            <input type="email" id="register-email" required>
-        </div>
-        
-        <div class="input-container">
-            <label for="register-direccion">Dirección</label>
-            <input type="text" id="register-direccion" required>
-        </div>
-        
-        <div class="input-container">
-            <label for="register-telefono">Teléfono Celular</label>
-            <input type="tel" id="register-telefono" required>
-        </div>
-        
-        <div class="input-container">
-            <label for="register-rol">Selecciona Rol</label>
-            <select id="register-rol" required>
-                <option value="" disabled selected>Selecciona Rol</option>
-                <option value="cliente">Entrenador</option>
-                <option value="vendedor">Jugador</option>
-                <option value="vendedor">Acudiente</option>
-            </select>
-        </div>
-        
-        <div class="input-container">
-            <label for="register-password">Contraseña</label>
-            <div class="password-container">
-                <input type="password" id="register-password" required>
-                <button type="button" class="toggle-password" onclick="togglePassword('register-password')">👁️</button>
+                    <div class="input-container">
+                        <label for="login-email">Correo Electrónico</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+
+                    <div class="input-container">
+                        <label for="login-password">Contraseña</label>
+                        <div class="password-container">
+                            <input type="password" id="login-password" required>
+                            <button type="button" class="toggle-password"
+                                onclick="togglePassword('login-password')"></button>
+                        </div>
+                    </div>
+
+                    <select id="register-rol" required>
+                        <option value="" disabled selected>Selecciona Rol</option>
+                        <option value="entrenador">Entrenador</option>
+                        <option value="jugador">Jugador</option>
+                        <option value="acudiente">Acudiente</option>
+                    </select>
+
+
+                    <button type="submit">Entrar</button>
+                </form>
+
+                <!--Register-->
+                <form action="" class="formulario__register" onsubmit="return validarFormularioRegistro()">
+                    <h2> Regístrate </h2>
+
+                    <div class="input-container">
+                        <label for="register-nombre">Nombre</label>
+                        <input type="text" id="register-nombre" required>
+                    </div>
+                    <div class="input-container">
+                        <label for="register-nombre">Apellido</label>
+                        <input type="text" id="register-nombre" required>
+                    </div>
+
+                    <div class="input-container">
+                        <label for="register-email">Correo Electrónico</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+
+                    <div class="input-container">
+                        <label for="register-direccion">Dirección</label>
+                        <input type="text" id="register-direccion" required>
+                    </div>
+
+                    <div class="input-container">
+                        <label for="register-telefono">Teléfono Celular</label>
+                        <input type="tel" id="register-telefono" required>
+                    </div>
+
+                    <div class="input-container">
+                        <label for="register-rol">Selecciona Rol</label>
+                        <select id="register-rol" required>
+                            <option value="" disabled selected>Selecciona Rol</option>
+                            <option value="cliente">Entrenador</option>
+                            <option value="vendedor">Jugador</option>
+                            <option value="vendedor">Acudiente</option>
+                        </select>
+                    </div>
+
+                    <div class="input-container">
+                        <label for="register-password">Contraseña</label>
+                        <div class="password-container">
+                            <input type="password" id="register-password" required>
+                            <button type="button" class="toggle-password"
+                                onclick="togglePassword('register-password')">👁️</button>
+                        </div>
+                    </div>
+
+                    <button type="submit">Regístrate</button>
+                </form>
             </div>
-        </div>
-        
-        <button type="submit">Regístrate</button>
-    </form>
-</div>
         </div>
     </main>
     <br>
@@ -130,17 +130,17 @@
 
     <!-- Scripts -->
     <script src="../controllers/loginController.js"></script>
-<br>
-<br>
-<br>
-<footer>
-    <div class="footer-container">
-        <div class="footer-section">
-            <h3>¡Estamos aquí para ayudarte!</h3>
-            <p>📅 <strong>Lunes, miercoles y Viernes:</strong> 4:30 PM - 7:00 PM<br>
-        </div>
-        
-            
+    <br>
+    <br>
+    <br>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>¡Estamos aquí para ayudarte!</h3>
+                <p>📅 <strong>Lunes, miercoles y Viernes:</strong> 4:30 PM - 7:00 PM<br>
+            </div>
+
+
             <div class="footer-section">
                 <h3><img src="../css/image/logo-light-transparent.png" alt="Logo"></h3>
                 <div class="social-icons">
@@ -153,13 +153,14 @@
                 <h3>Correo institucional:
                     contactenos@lacalera-cundinamarca.gov.co
                     notificacionjudicial@lacalera-cundinamarca.gov.co
-                    </h3>
-              </div>
+                </h3>
+            </div>
         </div>
         <div class="footer-bottom">
             <p>Asesorado, diseñado y desarrollado por: NYS. © 2024 </p>
             <p><a href="#">Política de Privacidad</a> | <a href="#">Términos y Condiciones</a></p>
         </div>
-    </footer> 
+    </footer>
 </body>
+
 </html>

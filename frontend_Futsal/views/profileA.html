@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - Entrenador</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Estilo para el botón en la sección de contacto */
+        .contact-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .contact-info a {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #4a90e2;
+            /* Azul intermedio del header */
+            padding: 8px 19px;
+            /* Reducido a 8px 16px */
+            font-size: 15px;
+            /* Reducido a 14px */
+            font-weight: bold;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            /* Asegura que el texto esté centrado */
+        }
+
+        .contact-info a:hover {
+            background-color: #1d6fd8;
+            /* Color más oscuro para el hover */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+        }
+
+
+        /* Estilo para el botón en la sección de contacto */
+        .contact-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .contact-info a {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #4a90e2;
+            /* Azul intermedio del header */
+            padding: 8px 19px;
+            /* Reducido a 8px 16px */
+            font-size: 15px;
+            /* Reducido a 14px */
+            font-weight: bold;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            /* Asegura que el texto esté centrado */
+        }
+
+        .contact-info a:hover {
+            background-color: #1d6fd8;
+            /* Color más oscuro para el hover */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* Estilos generales para la caja del perfil */
+        #profile-container,
+        #edit-profile-container {
+            border: 2px solid #f9c74f;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estilos para la imagen de perfil */
+        #profile-container img {
+            display: block;
+            margin: 0 auto 30px auto;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 4px solid #f9c74f;
+        }
+
+        /* Estilos para los botones */
+        button {
+            background-color: #f9c74f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #f08c00;
+        }
+
+        /* Estilos para la información del perfil */
+        .profile-info {
+            text-align: left;
+            margin-bottom: 20px;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+
+        .profile-info p {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        /* Estilos para el formulario de edición */
+        #edit-profile-form label {
+            font-size: 14px;
+            color: #555;
+        }
+
+        #edit-profile-form input,
+        #edit-profile-form textarea {
+            margin-bottom: 15px;
+            width: calc(100% - 22px);
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Estilos para el modal de edicion */
+        #edit-profile-container {
+            display: none;
+        }
+
+        /* Estilos para los iconos en el header */
+        .header-icons {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .header-icons a {
+            display: inline-block;
+            margin-left: 15px;
+        }
+
+        .header-icons img {
+            width: 70px;
+            /* Aumentar el tamaño de los íconos */
+            height: 70px;
+            /* Aumentar el tamaño de los íconos */
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #5da5e1;
+            padding: 5px 0;
+            /* Reducir el padding para hacer el footer más compacto */
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            /* Centrar verticalmente las secciones */
+            text-align: center;
+            padding: 5px 20px;
+            /* Ajustar el padding general */
+        }
+
+        .footer-section {
+            flex: 1;
+            margin: 5px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.1em;
+            /* Reducir el tamaño del título */
+            margin-bottom: 8px;
+            color: #f0f0f0;
+        }
+
+        .footer-section p {
+            font-size: 0.85em;
+            /* Reducir un poco el tamaño de la letra */
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .footer-section img {
+            width: 165px;
+            /* Aumentar el tamaño de la imagen del logo */
+            margin-bottom: -10px;
+            /* Reducir el margen inferior para acercar los íconos al logo */
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: -40px;
+            /* Reducir el margen superior para acercar los íconos al logo */
+        }
+
+        .social-icons a {
+            margin: 0 10px;
+            /* Mantener el espacio entre los íconos */
+            transition: transform 0.5s ease, filter 0.3s;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2) rotate(10deg);
+            /* Mantener la escala y el ángulo de rotación al hacer hover */
+            filter: brightness(1.2);
+        }
+
+        .social-icons img {
+            width: 24px;
+            /* Mantener el tamaño de los íconos */
+            margin-top: 0px;
+            /* Eliminar margen superior para mantener los íconos más cerca del logo */
+        }
+
+        .pet-quote {
+            font-style: italic;
+            font-size: 0.95em;
+            margin-top: 10px;
+            color: #ffe4b5;
+            /* Puedes cambiar este color según tu diseño */
+        }
+
+        .btn-contact {
+            display: inline-block;
+            background-color: #ffcc66;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: #333;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out, transform 0.3s;
+        }
+
+        .btn-contact:hover {
+            background-color: #ff9933;
+            transform: scale(1.1);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 10px;
+            border-top: 1px solid #fff;
+            padding-top: 10px;
+            font-size: 0.8em;
+        }
+
+        .footer-bottom p {
+            margin: 3px 0;
+        }
+
+        /* Animaciones adicionales */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Animación flotante en el logo */
+        .footer-section img {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Animación de parpadeo en las patas */
+        .paw-icon {
+            font-size: 30px;
+            color: lightgray;
+            cursor: pointer;
+        }
+
+        @keyframes paw-blink {
+            0% {
+                opacity: 0.6;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .contact-button {
+            padding: 10px 20px;
+            background-color: #f44336;
+            /* Rojo */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .contact-button:hover {
+            background-color: #c62828;
+            /* Rojo más oscuro */
+        }
+
+        /* Estilos para los iconos en el header */
+        .header-icons {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .header-icons a {
+            display: inline-block;
+            margin-left: 15px;
+        }
+
+        .header-icons img {
+            width: 70px;
+            /* Aumentar el tamaño de los íconos */
+            height: 70px;
+            /* Aumentar el tamaño de los íconos */
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="../css/image/logo-light-transparent.png" alt="Logo App">
+        </div>
+        <nav>
+            <a href="../views/indexEntrenador.html">INICIO</a>
+            <a href="calendario.html">CALENDARIO</a>
+            <a href="reviewsA.html">CONVOCATORIAS</a>
+            <a href="usersA.html">CATEGORIAS</a>
+        </nav>
+        <div class="header-icons">
+            <a href="profileA.html"><img id="header-profile-icon" src="../css/image/icon-profile.png" alt="Perfil"></a>
+        </div>
+        <div class="contact-info">
+            <a href="#" class="contact-button" id="logoutBtn">Cerrar Sesión</a>
+        </div>
+    </header>
+
+    <div id="profile-container">
+        <h2 style="text-align: center; font-family: 'Arial', sans-serif; color: #f9c74f;">Perfil</h2>
+        <img id="profile-pic" src="default-profile.png" alt="Foto de perfil">
+        <div class="profile-info">
+            <p><strong>Nombre:</strong> <span id="profile-name">Carlos García</span></p>
+            <p><strong>Email:</strong> <span id="profile-email">carlos.garcia@example.com</span></p>
+            <p><strong>Teléfono:</strong> <span id="profile-phone">987-654-3210</span></p>
+            <p><strong>Dirección:</strong> <span id="profile-address">Avenida Siempre Viva 742</span></p>
+        </div>
+        <button id="edit-profile-button">Editar Perfil</button>
+    </div>
+
+    <div id="edit-profile-container">
+        <h2 style="text-align: center; font-family: 'Arial', sans-serif; color: #f9c74f;">Editar Perfil</h2>
+        <form id="edit-profile-form">
+            <label for="profile-pic-input">Foto de Perfil:</label>
+            <input type="file" id="profile-pic-input" accept="image/*">
+            <br>
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" value="Carlos García">
+            <br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" value="carlos.garcia@example.com">
+            <br>
+            <label for="phone">Teléfono:</label>
+            <input type="text" id="phone" value="987-654-3210">
+            <br>
+            <label for="address">Dirección:</label>
+            <input type="text" id="address" value="Avenida Siempre Viva 742">
+            <br>
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+
+    <script src="../controllers/profileAController.js"></script>
+
+    <div class="modal" id="logoutModal">
+        <div class="modal-content">
+            <h2>Confirmar Cierre de Sesión</h2>
+            <p>¿Estás seguro de que deseas cerrar sesión?</p>
+            <button class="btn" id="confirmLogoutBtn">Sí, cerrar sesión</button>
+            <button class="btn cancel" id="cancelLogoutBtn">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>¡Estamos aquí para ayudarte!</h3>
+                <p>📅 <strong>Lunes, miercoles y Viernes:</strong> 4:30 PM - 7:00 PM<br>
+            </div>
+
+            <div class="footer-section">
+                <h3><img src="../css/image/logo-light-transparent.png" alt="Logo"></h3>
+                <div class="social-icons">
+                    <a href="#"><img src="../css/image/faceb.png" alt="Facebook"></a>
+                    <a href="#"><img src="../css/image/whats.png" alt="WhatsApp"></a>
+                    <a href="#"><img src="../css/image/insta.png" alt="Instagram"></a>
+                </div>
+            </div>
+            <div class="footer-section contact-us">
+                <h3>Correo institucional:
+                    contactenos@lacalera-cundinamarca.gov.co
+                    notificacionjudicial@lacalera-cundinamarca.gov.co
+                </h3>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Asesorado, diseñado y desarrollado por: NYS. © 2024 </p>
+            <p><a href="#">Política de Privacidad</a> | <a href="#">Términos y Condiciones</a></p>
+        </div>
+    </footer>
+    <script src="../js/script.js"></script>
+</body>
+
+</html>

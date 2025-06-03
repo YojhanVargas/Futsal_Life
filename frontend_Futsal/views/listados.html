@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +21,8 @@
             font-size: 18px;
         }
 
-        table th, table td {
+        table th,
+        table td {
             padding: 12px 15px;
             text-align: left;
             border: 1px solid #ddd;
@@ -57,13 +59,16 @@
             background-color: #ffcc66;
             color: black;
         }
+
         .status-btn.asistio {
-        background-color: #28a745; /* Verde */
-        color: white;
+            background-color: #28a745;
+            /* Verde */
+            color: white;
         }
 
         .status-btn.inasistencia {
-            background-color: #dc3545; /* Rojo */
+            background-color: #dc3545;
+            /* Rojo */
             color: white;
         }
 
@@ -73,8 +78,10 @@
         }
 
         button.save-btn {
-            background-color: #ffcc66; /* Color de fondo del botón */
-            color: white; /* Color del texto */
+            background-color: #ffcc66;
+            /* Color de fondo del botón */
+            color: white;
+            /* Color del texto */
         }
 
         /* Responsive */
@@ -98,8 +105,8 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
             padding-top: 60px;
         }
 
@@ -148,12 +155,15 @@
         }
 
         .header-icons img {
-            width: 70px; /* Aumentar el tamaño de los íconos */
-            height: 70px; /* Aumentar el tamaño de los íconos */
+            width: 70px;
+            /* Aumentar el tamaño de los íconos */
+            height: 70px;
+            /* Aumentar el tamaño de los íconos */
             cursor: pointer;
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="logo">
@@ -161,9 +171,10 @@
         </div>
         <nav>
             <a href="../views/indexEntrenador.html">INICIO</a>
-            <a href="calendario.html">CALENDARIO</a>
-            <a href="reviewsA.html">GESTIÓN DE RESEÑAS</a>
-            <a href="usersA.html">GESTIÓN DE USUARIOS</a>
+            <a href="../views/listados.html">LISTADO</a>
+            <a href="../views/petsV.html">CONVOCATORIAS</a>
+            <a href="../views/petsV.html">CATEGORIA</a>
+            <a href="../views/calendario.html">CALENDARIO</a>
         </nav>
         <div class="header-icons">
             <a href="profileA.html"><img id="header-profile-icon" src="../css/image/icon-profile.png" alt="Perfil"></a>
@@ -175,10 +186,21 @@
 
     <section class="reviews-section">
         <div class="title">
-           Listado de asistencia
+            Listado de asistencia
         </div>
+        <div style="text-align: center; margin: 20px;">
+            <label for="categoriaFiltro"><strong>Filtrar por categoría:</strong></label>
+            <select id="categoriaFiltro" onchange="filtrarPorCategoria()" style="padding: 8px; font-size: 16px;">
+                <option value="todas">Todas</option>
+                <option value="Prejuvenil">Prejuvenil</option>
+                <option value="Unica">Unica</option>
+                <option value="Juvenil">Juvenil</option>
+                <option value="Iniciacion">Iniciacion</option>
+            </select>
+        </div>
+
     </section>
-    
+
     <table>
         <thead>
             <tr>
@@ -250,29 +272,47 @@
             <button onclick="saveChanges()">Guardar Cambios</button>
         </div>
     </div>
+    <!-- Botón para guardar listado -->
+    <button id="guardarBtn" onclick="guardarAsistencia()" style="
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    z-index: 1000;
+">
+        Guardar Listado
+    </button>
+
 
     <script>
         let currentRow;
 
         function toggleStatus(button) {
-    const row = button.closest('tr');
-    const statusSpan = row.querySelector('.status');
-    const userId = row.cells[0].textContent; // ID del usuario
+            const row = button.closest('tr');
+            const statusSpan = row.querySelector('.status');
+            const userId = row.cells[0].textContent; // ID del usuario
 
-    if (statusSpan.textContent === "Asistio") {
-        statusSpan.textContent = "Inasistencia";
-        button.textContent = "❌";
-        button.classList.remove("asistio");
-        button.classList.add("inasistencia");
-        localStorage.setItem(`asistencia_${userId}`, "inasistencia");
-    } else {
-        statusSpan.textContent = "Asistio";
-        button.textContent = "✅";
-        button.classList.remove("inasistencia");
-        button.classList.add("asistio");
-        localStorage.setItem(`asistencia_${userId}`, "asistio");
-    }
-}
+            if (statusSpan.textContent === "Asistio") {
+                statusSpan.textContent = "Inasistencia";
+                button.textContent = "❌";
+                button.classList.remove("asistio");
+                button.classList.add("inasistencia");
+                localStorage.setItem(`asistencia_${userId}`, "inasistencia");
+            } else {
+                statusSpan.textContent = "Asistio";
+                button.textContent = "✅";
+                button.classList.remove("inasistencia");
+                button.classList.add("asistio");
+                localStorage.setItem(`asistencia_${userId}`, "asistio");
+            }
+        }
 
 
 
@@ -304,39 +344,82 @@
 
             closeEditModal();
         }
-        window.addEventListener('DOMContentLoaded', () => {
-    const rows = document.querySelectorAll('#userTableBody tr');
+        function guardarAsistencia() {
+            const rows = document.querySelectorAll('#userTableBody tr');
+            const asistenciaData = [];
 
-    rows.forEach(row => {
-        const userId = row.cells[0].textContent;
-        const savedStatus = localStorage.getItem(`asistencia_${userId}`);
-        const statusSpan = row.querySelector('.status');
-        const button = row.querySelector('.status-btn');
+            rows.forEach(row => {
+                const id = row.cells[0].textContent;
+                const nombre = row.cells[1].textContent;
+                const email = row.cells[2].textContent;
+                const categoria = row.cells[3].textContent;
+                const asistencia = row.cells[4].textContent;
 
-        if (savedStatus === "inasistencia") {
-            statusSpan.textContent = "Inasistencia";
-            button.textContent = "❌";
-            button.classList.remove("asistio");
-            button.classList.add("inasistencia");
-        } else {
-            statusSpan.textContent = "Asistio";
-            button.textContent = "✅";
-            button.classList.remove("inasistencia");
-            button.classList.add("asistio");
+                asistenciaData.push({ id, nombre, email, categoria, asistencia });
+            });
+
+            const fechaHora = new Date().toLocaleString();
+
+            const listado = {
+                fechaHora,
+                registros: asistenciaData
+            };
+
+            // Simular guardado: mostrar en consola (aquí puedes hacer POST al backend)
+            console.log("Listado de asistencia guardado:", listado);
+
+            alert("Listado de asistencia guardado con fecha y hora: " + fechaHora);
         }
-    });
-});
+        function filtrarPorCategoria() {
+            const filtro = document.getElementById("categoriaFiltro").value;
+            const filas = document.querySelectorAll("#userTableBody tr");
+
+            filas.forEach(fila => {
+                const categoria = fila.cells[3].textContent.trim();
+
+                if (filtro === "todas" || categoria === filtro) {
+                    fila.style.display = "";
+                } else {
+                    fila.style.display = "none";
+                }
+            });
+        }
+
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const rows = document.querySelectorAll('#userTableBody tr');
+
+            rows.forEach(row => {
+                const userId = row.cells[0].textContent;
+                const savedStatus = localStorage.getItem(`asistencia_${userId}`);
+                const statusSpan = row.querySelector('.status');
+                const button = row.querySelector('.status-btn');
+
+                if (savedStatus === "inasistencia") {
+                    statusSpan.textContent = "Inasistencia";
+                    button.textContent = "❌";
+                    button.classList.remove("asistio");
+                    button.classList.add("inasistencia");
+                } else {
+                    statusSpan.textContent = "Asistio";
+                    button.textContent = "✅";
+                    button.classList.remove("inasistencia");
+                    button.classList.add("asistio");
+                }
+            });
+
+        });
 
     </script>
 
-<div class="modal" id="logoutModal">
-    <div class="modal-content">
-        <h2>Confirmar Cierre de Sesión</h2>
-        <p>¿Estás seguro de que deseas cerrar sesión?</p>
-        <button class="btn" id="confirmLogoutBtn">Sí, cerrar sesión</button>
-        <button class="btn cancel" id="cancelLogoutBtn">Cancelar</button>
+    <div class="modal" id="logoutModal">
+        <div class="modal-content">
+            <h2>Confirmar Cierre de Sesión</h2>
+            <p>¿Estás seguro de que deseas cerrar sesión?</p>
+            <button class="btn" id="confirmLogoutBtn">Sí, cerrar sesión</button>
+            <button class="btn cancel" id="cancelLogoutBtn">Cancelar</button>
+        </div>
     </div>
-</div>
 
     <!-- Footer -->
     <footer>
@@ -345,27 +428,28 @@
                 <h3>¡Estamos aquí para ayudarte!</h3>
                 <p>📅 <strong>Lunes, miercoles y Viernes:</strong> 4:30 PM - 7:00 PM<br>
             </div>
-            
-          <div class="footer-section">
-            <h3><img src="../css/image/logo-light-transparent.png" alt="Logo"></h3>
-            <div class="social-icons">
-              <a href="#"><img src="../css/image/faceb.png" alt="Facebook"></a>
-              <a href="#"><img src="../css/image/whats.png" alt="WhatsApp"></a>
-              <a href="#"><img src="../css/image/insta.png" alt="Instagram"></a>
+
+            <div class="footer-section">
+                <h3><img src="../css/image/logo-light-transparent.png" alt="Logo"></h3>
+                <div class="social-icons">
+                    <a href="#"><img src="../css/image/faceb.png" alt="Facebook"></a>
+                    <a href="#"><img src="../css/image/whats.png" alt="WhatsApp"></a>
+                    <a href="#"><img src="../css/image/insta.png" alt="Instagram"></a>
+                </div>
             </div>
-          </div>
-          <div class="footer-section contact-us">
-            <h3>Correo institucional:
-                contactenos@lacalera-cundinamarca.gov.co
-                notificacionjudicial@lacalera-cundinamarca.gov.co
+            <div class="footer-section contact-us">
+                <h3>Correo institucional:
+                    contactenos@lacalera-cundinamarca.gov.co
+                    notificacionjudicial@lacalera-cundinamarca.gov.co
                 </h3>
-          </div>
+            </div>
         </div>
         <div class="footer-bottom">
             <p>Asesorado, diseñado y desarrollado por: NYS. © 2024 </p>
             <p><a href="#">Política de Privacidad</a> | <a href="#">Términos y Condiciones</a></p>
         </div>
-      </footer>  
+    </footer>
     <script src="../js/script.js"></script>
 </body>
+
 </html>

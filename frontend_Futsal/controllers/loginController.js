@@ -75,49 +75,31 @@ function togglePassword(inputId) {
    }
 }
 
-// Validación del formulario de inicio de sesión
+
 function validarFormularioLogin() {
-   var email = document.getElementById("login-email").value;
-   var password = document.getElementById("login-password").value;
-   var rol = document.getElementById("login-rol").value;
+    const rol = document.getElementById('login-rol').value;
 
-   if (!email || !password || !rol) {
-       alert("Todos los campos son obligatorios.");
-       return false;
-   }
-
-   if (!validarEmail(email)) {
-       alert("Por favor, ingresa un correo electrónico válido.");
-       return false;
-   }
-
-   return true;
+    if (rol === "entrenador") {
+        window.location.href = "index_entrenador.html";
+    } else if (rol === "jugador") {
+        window.location.href = "index_jugador.html";
+    } else if (rol === "acudiente") {
+        window.location.href = "index_acudiente.html";
+    }
+    return false; // Evita que el formulario se envíe
 }
 
-// loginController.js
-
-// Validar formulario de registro
 function validarFormularioRegistro() {
-   // Aquí puedes agregar la lógica para validar el registro.
-   // Luego, redirigir al inicio de sesión.
-   alert('Registro exitoso. Ahora inicia sesión.');
-   window.location.href = 'login.html'; // Redirige al inicio de sesión
-   return false; // Evita que el formulario se envíe de forma predeterminada.
-}
+    const rol = document.getElementById('register-rol').value;
 
-// Validar formulario de inicio de sesión
-function validarFormularioLogin() {
-   const rol = document.getElementById('login-rol').value;
-
-   if (rol === 'Jugador') {
-       window.location.href = './indexJugador.html'; // Redirige al Jugador
-   } else if (rol === 'Entrenador') {
-       window.location.href = './indexEntrenador.html'; // Redirige al Entrenador
-   } else {
-       alert('Por favor, selecciona un rol válido.');
-   }
-
-   return false; // Evita que el formulario se envíe de forma predeterminada.
+    if (rol === "entrenador") {
+        window.location.href = "index_entrenador.html";
+    } else if (rol === "jugador") {
+        window.location.href = "index_jugador.html";
+    } else if (rol === "acudiente") {
+        window.location.href = "index_acudiente.html";
+    }
+    return false; // Evita que el formulario se envíe
 }
 
 // Función para mostrar/ocultar contraseña
