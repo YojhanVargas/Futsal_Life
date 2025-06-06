@@ -1,12 +1,13 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Usuario = require('../models/usuario.model');
+const db = require('../config/database');
 require('dotenv').config();
 
 const registrar = async (req, res) => {
-  const { Nombre, Apellido, Correo, Contraseña, Id_Rol, Telefono_Celular, Direccion } = req.body;
+  const { Nombre, Apellido, Correo, Direccion, Telefono, Contraseña, Id_Rol } = req.body;
 
-  if (!Nombre || !Apellido || !Correo || !Contraseña || !Telefono_Celular || !Direccion) {
+  if (!Nombre || !Apellido || !Correo || !Direccion || !Telefono || !Contraseña) {
     return res.status(400).json({ mensaje: 'Todos los campos son obligatorios' });
   }
 
@@ -17,7 +18,7 @@ const registrar = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(Contraseña, 10);
 
-    Usuario.crear({ Nombre, Apellido, Correo, Contraseña: hashedPassword, Id_Rol, Telefono_Celular, Direccion }, (err, result) => {
+    Usuario.crear({ Nombre, Apellido, Correo, Direccion, Telefono, Contraseña: hashedPassword, Id_Rol }, (err, result) => {
       if (err) return res.status(500).json({ mensaje: 'Error al registrar usuario' });
       res.status(201).json({ mensaje: 'Registro exitoso' });
     });
