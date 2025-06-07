@@ -12,16 +12,45 @@ const registrar = async (req, res) => {
   }
 
   Usuario.buscarPorCorreo(Correo, async (err, resultados) => {
+    if (err) return res.status(500).json({ mensaje: 'Error al verificar el correo' });
     if (resultados.length > 0) {
       return res.status(409).json({ mensaje: 'El correo ya está registrado' });
     }
 
-    const hashedPassword = await bcrypt.hash(Contraseña, 10);
+    try {
+      const hashedPassword = await bcrypt.hash(Contraseña, 10);
 
-    Usuario.crear({ Nombre, Apellido, Correo, Direccion, Telefono, Contraseña: hashedPassword, Id_Rol }, (err, result) => {
-      if (err) return res.status(500).json({ mensaje: 'Error al registrar usuario' });
-      res.status(201).json({ mensaje: 'Registro exitoso' });
-    });
+      const queryUsuario = `
+        INSERT INTO usuario (Nombre, Apellido, Correo, Contraseña, Id_Rol)
+        VALUES (?, ?, ?, ?, ?)
+      `;
+
+      db.query(queryUsuario, [Nombre, Apellido, Correo, hashedPassword, Id_Rol], (err, result) => {
+        if (err) {
+          console.log('Error al registrar usuario:', err);
+          return res.status(500).json({ mensaje: 'Error al registrar usuario' });
+        }
+
+        const Id_Usuario = result.insertId;
+
+        const queryPerfil = `
+          INSERT INTO perfil (Nombre, Direccion, Telefono, Id_Usuario)
+          VALUES (?, ?, ?, ?)
+        `;
+
+        db.query(queryPerfil, [Nombre, Direccion, Telefono, Id_Usuario], (err) => {
+          if (err) {
+            console.log('Error al crear el perfil:', err);
+            return res.status(500).json({ mensaje: 'Error al crear el perfil del usuario' });
+          }
+
+          res.status(201).json({ mensaje: 'Usuario registrado correctamente con perfil' });
+        });
+      });
+    } catch (error) {
+      console.log('Error interno:', error);
+      res.status(500).json({ mensaje: 'Error interno del servidor' });
+    }
   });
 };
 

@@ -19,6 +19,8 @@ const actualizarPerfil = (req, res) => {
   const { Nombre, Direccion, Telefono, Correo } = req.body;
   const Id_Usuario = req.usuario.id;
 
+  console.log('Datos que llegan para actualizar perfil:', { Nombre, Direccion, Telefono, Id_Usuario });
+  
   if (!Nombre || !Direccion || !Telefono || !Correo) {
     return res.status(400).json({ mensaje: 'Todos los campos son obligatorios' });
   }
