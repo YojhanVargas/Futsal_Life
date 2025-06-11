@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const verificarToken = require('../middlewares/auth.middleware');
+const { verificarToken } = require('../middlewares/auth.middleware');
 const perfilController = require('../controllers/perfil.controller');
 
 // Ver perfil del usuario autenticado

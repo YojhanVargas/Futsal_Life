@@ -19,4 +19,14 @@ const verificarToken = (req, res, next) => {
     }
 };
 
-module.exports = verificarToken;
+const soloEntrenadores = (req, res, next) => {
+  if (req.usuario.rol !== 2) {
+    return res.status(403).json({ mensaje: 'Acceso denegado: solo entrenadores' });
+  }
+  next();
+};
+
+module.exports = {
+    verificarToken,
+    soloEntrenadores
+};
