@@ -17,8 +17,6 @@
         </div>
         <nav>
             <a href="./index.html">INICIO</a>
-            <!--<a href="./pets.html">PETS</a>
-            <a href="./reviews.html">RESEÑAS</a> -->
         </nav>
         <div class="contact-info">
             <a href="./login.html" class="contact-button">Registrarse/Iniciar Sesión</a>
@@ -43,84 +41,88 @@
             <!--Formulario de Login y registro-->
             <div class="contenedor__login-register">
                 <!--Login-->
-                <form id="login-form" action="" class="formulario__login" onsubmit="return validarFormularioLogin()">
+                <form id="login-form" class="formulario__login">
                     <h2> Iniciar Sesión </h2>
+                    <!-- Div para mostrar errores del backend -->
+                    <div id="login-error-message" style="color: red; margin-bottom: 15px; text-align: center;"></div>
 
                     <div class="input-container">
                         <label for="login-email">Correo Electrónico</label>
-                        <input type="email" id="login-email" required>
+                        <input type="email" id="login-email" name="Correo" required>
                     </div>
 
                     <div class="input-container">
                         <label for="login-password">Contraseña</label>
                         <div class="password-container">
-                            <input type="password" id="login-password" required>
+                            <input type="password" id="login-password" name="Contraseña" required>
+                            <!-- Ojo: El onclick ya está manejado en el JS unificado, pero lo dejamos por si acaso -->
                             <button type="button" class="toggle-password"
-                                onclick="togglePassword('login-password')"></button>
+                                onclick="togglePassword('login-password')">👁️</button>
                         </div>
                     </div>
-
-                    <select id="register-rol" required>
-                        <option value="" disabled selected>Selecciona Rol</option>
-                        <option value="entrenador">Entrenador</option>
-                        <option value="jugador">Jugador</option>
-                        <option value="acudiente">Acudiente</option>
-                    </select>
-
-
                     <button type="submit">Entrar</button>
                 </form>
+<form id="register-form" class="formulario__register">
+    <h2> Regístrate </h2>
+    <div id="register-error-message" style="color: red; margin-bottom: 15px; text-align: center;"></div>
 
-                <!--Register-->
-                <form action="" class="formulario__register" onsubmit="return validarFormularioRegistro()">
-                    <h2> Regístrate </h2>
+    <div class="input-container">
+        <label for="register-nombre">Nombre</label>
+        <input type="text" id="register-nombre" name="Nombre" required>
+    </div>
+    <div class="input-container">
+        <label for="register-apellido">Apellido</label>
+        <input type="text" id="register-apellido" name="Apellido" required>
+    </div>
+    <div class="input-container">
+        <label for="register-email">Correo Electrónico</label>
+        <input type="email" id="register-email" name="Correo" required>
+    </div>
+    <div class="input-container">
+        <label for="register-direccion">Dirección</label>
+        <input type="text" id="register-direccion" name="Direccion" required>
+    </div>
+    <div class="input-container">
+        <label for="register-telefono">Teléfono</label>
+        <input type="tel" id="register-telefono" name="Telefono" required>
+    </div>
 
-                    <div class="input-container">
-                        <label for="register-nombre">Nombre</label>
-                        <input type="text" id="register-nombre" required>
-                    </div>
-                    <div class="input-container">
-                        <label for="register-nombre">Apellido</label>
-                        <input type="text" id="register-nombre" required>
-                    </div>
+    <div class="input-container">
+        <label for="register-rol">Selecciona Rol</label>
+        <select id="register-rol" name="Id_Rol" required>
+            <option value="" disabled selected>Selecciona Rol</option>
+            <option value="1">Entrenador</option>
+            <option value="2">Jugador</option>
+            <option value="3">Acudiente</option>
+        </select>
+    </div>
 
-                    <div class="input-container">
-                        <label for="register-email">Correo Electrónico</label>
-                        <input type="email" id="register-email" required>
-                    </div>
+    <!-- ===== NUEVO CAMPO DE CATEGORÍA (INICIALMENTE OCULTO) ===== -->
+    <div class="input-container" id="categoria-container" style="display: none;">
+        <label for="register-categoria">Selecciona Categoría</label>
+        <select id="register-categoria" name="Id_Categoria">
+            <option value="" disabled selected>Selecciona una categoría</option>
+            <option value="1">Iniciación</option>
+            <option value="2">Prejuvenil</option>
+            <option value="3">Juvenil</option>
+            <option value="4">Única/Mayores</option>
+        </select>
+    </div>
+    <!-- ========================================================== -->
 
-                    <div class="input-container">
-                        <label for="register-direccion">Dirección</label>
-                        <input type="text" id="register-direccion" required>
-                    </div>
+    <div class="input-container">
+        <label for="register-password">Contraseña</label>
+        <div class="password-container">
+            <input type="password" id="register-password" name="Contraseña" required>
+            <button type="button" class="toggle-password" onclick="togglePassword('register-password')">👁️</button>
+        </div>
+    </div>
+    <button type="submit">Regístrate</button>
+</form>
 
-                    <div class="input-container">
-                        <label for="register-telefono">Teléfono Celular</label>
-                        <input type="tel" id="register-telefono" required>
-                    </div>
-
-                    <div class="input-container">
-                        <label for="register-rol">Selecciona Rol</label>
-                        <select id="register-rol" required>
-                            <option value="" disabled selected>Selecciona Rol</option>
-                            <option value="cliente">Entrenador</option>
-                            <option value="vendedor">Jugador</option>
-                            <option value="vendedor">Acudiente</option>
-                        </select>
-                    </div>
-
-                    <div class="input-container">
-                        <label for="register-password">Contraseña</label>
-                        <div class="password-container">
-                            <input type="password" id="register-password" required>
-                            <button type="button" class="toggle-password"
-                                onclick="togglePassword('register-password')">👁️</button>
-                        </div>
-                    </div>
-
-                    <button type="submit">Regístrate</button>
-                </form>
             </div>
+            </form>
+        </div>
         </div>
     </main>
     <br>

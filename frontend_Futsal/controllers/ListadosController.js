@@ -24,8 +24,8 @@ function loadUsers() {
             <td>${user.status}</td>
             <td class="action-buttons">
                 <button class="edit-btn" onclick="editUser(${user.id})">Editar</button>
-                <button class="activate-btn" onclick="activateUser(${user.id})">Activar</button>
-                <button class="inactivate-btn" onclick="inactivateUser(${user.id})">Inactivar</button>
+                <button class="activate-btn" onclick="activateUser(${user.id})">Asistio</button>
+                <button class="inactivate-btn" onclick="inactivateUser(${user.id})">Inasistio</button>
             </td>
         `;
 
@@ -49,7 +49,7 @@ function editUser(userId) {
 function activateUser(userId) {
     const user = users.find(u => u.id === userId);
     if (user) {
-        user.status = 'Activo';
+        user.status = 'Asistio';
         loadUsers(); // Recargar la tabla con los datos actualizados
     }
 }
@@ -58,7 +58,7 @@ function activateUser(userId) {
 function inactivateUser(userId) {
     const user = users.find(u => u.id === userId);
     if (user) {
-        user.status = 'Inactivo';
+        user.status = 'Inasistio';
         loadUsers(); // Recargar la tabla con los datos actualizados
     }
 }

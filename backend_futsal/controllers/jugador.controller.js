@@ -1,5 +1,6 @@
 const Jugador = require('../models/jugador.model');
 
+
 //crear jugador 
 const crearJugador = (req, res) => {
     const { Id_Usuario, Id_Equipo } = req.body;
@@ -14,10 +15,16 @@ const crearJugador = (req, res) => {
     });
 };
 
-//obtener todos los jugadores
+
+// OBTENER TODOS LOS JUGADORES CON DETALLES
 const obtenerJugadores = (req, res) => {
-    Jugador.obtenerTodos((err, resultados) => {
-        if (err) return res.status(500).json({ mensaje: 'Error al obtener jugadores'});
+    // Usamos el nuevo método del modelo que hace el JOIN
+    Jugador.obtenerTodosConDetalles((err, resultados) => {
+        if (err) {
+            console.error("Error al obtener jugadores con detalles:", err);
+            return res.status(500).json({ mensaje: 'Error al obtener jugadores' });
+        }
+        // La respuesta ahora incluirá Nombre, Apellido, Correo y Categoria
         res.json(resultados);
     });
 };
@@ -47,9 +54,12 @@ const eliminarJugador = (req, res) => {
   });
 };
 
+
+
 module.exports={
     crearJugador,
     obtenerJugadores,
     actualizarJugador,
-    eliminarJugador
+    eliminarJugador,
+    obtenerJugadores
 };
