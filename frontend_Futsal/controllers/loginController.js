@@ -122,8 +122,18 @@ document.addEventListener("DOMContentLoaded", function() {
                 alert(data.mensaje);
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('usuario', JSON.stringify(data.usuario));
-                if (data.usuario.rol === 1) window.location.href = 'indexEntrenador.html';
-                else if (data.usuario.rol === 2) window.location.href = 'indexJugador.html';
+
+                // 🟡 Agregar rol legible para usar en frontend
+                if (data.usuario.rol === 1) {
+                    localStorage.setItem('userRole', 'entrenador');
+                    window.location.href = 'indexEntrenador.html';
+                } else if (data.usuario.rol === 2) {
+                    localStorage.setItem('userRole', 'jugador');
+                    window.location.href = 'indexJugador.html';
+                } else {
+                    localStorage.setItem('userRole', 'otro');
+                    window.location.href = 'indexJugador.html'; // o a donde quieras
+                }
             } else {
                 loginErrorMessageDiv.textContent = data.mensaje;
             }
