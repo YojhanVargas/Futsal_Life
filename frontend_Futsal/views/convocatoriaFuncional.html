@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listados de asistencia</title>
+    <title>CONVOCATORIA</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -171,7 +171,7 @@
         </div>
         <nav>
             <a href="../views/indexEntrenador.html">INICIO</a>
-            <a href="../views/convocatoriaFuncional.html">CONVOCATORIAS</a>
+            <a href="../views/listados.html">LISTADO</a>
             <a href="../views/petsV.html">CATEGORIA</a>
             <a href="../views/calendario.html">CALENDARIO</a>
         </nav>
@@ -185,7 +185,7 @@
 
     <section class="reviews-section">
         <div class="title">
-            Listado de asistencia
+            Convocatoria
         </div>
         <div style="text-align: center; margin: 20px;">
             <label for="categoriaFiltro"><strong>Filtrar por categoría:</strong></label>
@@ -200,66 +200,18 @@
 
     </section>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Categoria</th>
-                <th>Asistencia</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody id="userTableBody">
-            <!-- Datos de usuarios simulados -->
-            <tr>
-                <td>1</td>
-                <td>Juan Pérez</td>
-                <td>juan.perez@example.com</td>
-                <td>Prejuvenil</td>
-                <td><span class="status">Asistio</span></td>
-                <td class="action-buttons">
-                    <button class="edit-btn" onclick="openEditModal(this)">Editar</button>
-                    <button class="status-btn" onclick="toggleStatus(this)">✅</button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>María López</td>
-                <td>maria.lopez@example.com</td>
-                <td>Unica</td>
-                <td><span class="status">Inasistencia</span></td>
-                <td class="action-buttons">
-                    <button class="edit-btn" onclick="openEditModal(this)">Editar</button>
-                    <button class="status-btn" onclick="toggleStatus(this)">✅</button>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Carlos Sánchez</td>
-                <td>carlos.sanchez@example.com</td>
-                <td>Juvenil</td>
-                <td><span class="status">Asistio</span></td>
-                <td class="action-buttons">
-                    <button class="edit-btn" onclick="openEditModal(this)">Editar</button>
-                    <button class="status-btn" onclick="toggleStatus(this)">✅</button>
-                </td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Ana Martínez</td>
-                <td>ana.martinez@example.com</td>
-                <td>Iniciacion</td>
-                <td><span class="status">Inasistio</span></td>
-                <td class="action-buttons">
-                    <button class="edit-btn" onclick="openEditModal(this)">Editar</button>
-                    <button class="status-btn" onclick="toggleStatus(this)">✅</button>
-                </td>
-            </tr>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Categoria</th>
+            <th>Fecha</th> <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody id="userTableBody">
         </tbody>
-    </table>
-
+</table>
     <!-- Modal para editar usuario -->
     <div id="editModal" class="modal">
         <div class="modal-content">
@@ -268,11 +220,11 @@
             <input type="text" id="editName" placeholder="Nombre">
             <input type="email" id="editEmail" placeholder="Email">
             <input type="text" id="editRole" placeholder="Categoria">
-            <button onclick="saveChanges()">Guardar Cambios</button>
+            <button onclick="saveChanges()"></button>
         </div>
     </div>
     <!-- Botón para guardar listado -->
-    <button id="guardarBtn" onclick="guardarAsistencia()" style="
+    <button id="guardarBtn" onclick="guardarFechas()" style="
     position: fixed;
     bottom: 30px;
     right: 30px;
@@ -286,131 +238,142 @@
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     z-index: 1000;
 ">
-        Guardar Listado
+        Guardar Lista
     </button>
 
 
-    <script>
-        let currentRow;
+<script>
+    let currentRow; // Para el modal de edición
 
-        function toggleStatus(button) {
-            const row = button.closest('tr');
-            const statusSpan = row.querySelector('.status');
-            const userId = row.cells[0].textContent; // ID del usuario
+    /**
+     * Carga los jugadores desde el backend y los muestra en la tabla.
+     * Ahora incluye un campo de fecha editable para cada jugador.
+     */
+    async function cargarJugadores(category = 'todas') {
+        const userTableBody = document.getElementById('userTableBody');
+        userTableBody.innerHTML = '<tr><td colspan="5">Cargando jugadores...</td></tr>';
 
-            if (statusSpan.textContent === "Asistio") {
-                statusSpan.textContent = "Inasistencia";
-                button.textContent = "❌";
-                button.classList.remove("asistio");
-                button.classList.add("inasistencia");
-                localStorage.setItem(`asistencia_${userId}`, "inasistencia");
-            } else {
-                statusSpan.textContent = "Asistio";
-                button.textContent = "✅";
-                button.classList.remove("inasistencia");
-                button.classList.add("asistio");
-                localStorage.setItem(`asistencia_${userId}`, "asistio");
+        try {
+            let apiUrl = '/api/players';
+            if (category && category !== 'todas') {
+                apiUrl += `?category=${category}`;
             }
-        }
 
+            const response = await fetch(apiUrl);
+            if (!response.ok) throw new Error(`Error en la red: ${response.statusText}`);
+            
+            const players = await response.json();
+            userTableBody.innerHTML = '';
 
+            if (players.length === 0) {
+                userTableBody.innerHTML = '<tr><td colspan="5">No se encontraron jugadores.</td></tr>';
+                return;
+            }
 
-        function openEditModal(button) {
-            currentRow = button.closest('tr');
-            const name = currentRow.cells[1].textContent;
-            const email = currentRow.cells[2].textContent;
-            const role = currentRow.cells[3].textContent;
+            players.forEach(player => {
+                const row = userTableBody.insertRow();
 
-            document.getElementById('editName').value = name;
-            document.getElementById('editEmail').value = email;
-            document.getElementById('editRole').value = categoria;
+                // Celda 0: ID (viene del backend)
+                row.insertCell(0).textContent = player.id;
+                // Celda 1: Nombre (viene del backend)
+                row.insertCell(1).textContent = player.name;
+                // Celda 2: Categoría (viene del backend)
+                row.insertCell(2).textContent = player.category;
 
-            document.getElementById('editModal').style.display = 'block';
-        }
+                // --- CAMBIO PRINCIPAL ---
+                // Celda 3: Fecha (campo editable por el usuario)
+                const fechaCell = row.insertCell(3);
+                // Insertamos un input de tipo "date" para que aparezca un calendario.
+                fechaCell.innerHTML = `<input type="date" class="fecha-input">`;
 
-        function closeEditModal() {
-            document.getElementById('editModal').style.display = 'none';
-        }
-
-        function saveChanges() {
-            const name = document.getElementById('editName').value;
-            const email = document.getElementById('editEmail').value;
-            const role = document.getElementById('editRole').value;
-
-            currentRow.cells[1].textContent = name;
-            currentRow.cells[2].textContent = email;
-            currentRow.cells[3].textContent = categoria;
-
-            closeEditModal();
-        }
-        function guardarAsistencia() {
-            const rows = document.querySelectorAll('#userTableBody tr');
-            const asistenciaData = [];
-
-            rows.forEach(row => {
-                const id = row.cells[0].textContent;
-                const nombre = row.cells[1].textContent;
-                const email = row.cells[2].textContent;
-                const categoria = row.cells[3].textContent;
-                const asistencia = row.cells[4].textContent;
-
-                asistenciaData.push({ id, nombre, email, categoria, asistencia });
+                // Celda 4: Acciones (Solo el botón de editar se mantiene)
+                const actionCell = row.insertCell(4);
+                actionCell.classList.add('action-buttons');
+                actionCell.innerHTML = `<button class="edit-btn" onclick="openEditModal(this)">✍</button>`;
             });
 
-            const fechaHora = new Date().toLocaleString();
-
-            const listado = {
-                fechaHora,
-                registros: asistenciaData
-            };
-
-            // Simular guardado: mostrar en consola
-            console.log("Listado de asistencia guardado:", listado);
-
-            alert("Listado de asistencia guardado con fecha y hora: " + fechaHora);
+        } catch (error) {
+            console.error('Error al cargar los jugadores:', error);
+            userTableBody.innerHTML = `<tr><td colspan="5">Error al cargar datos. Revisa la consola.</td></tr>`;
         }
-        function filtrarPorCategoria() {
-            const filtro = document.getElementById("categoriaFiltro").value;
-            const filas = document.querySelectorAll("#userTableBody tr");
+    }
 
-            filas.forEach(fila => {
-                const categoria = fila.cells[3].textContent.trim();
+    /**
+     * NUEVA FUNCIÓN: Recolecta los IDs y las fechas seleccionadas,
+     * y los prepara en un formato JSON para el backend.
+     */
+    function guardarFechas() {
+        const rows = document.querySelectorAll('#userTableBody tr');
+        const datosParaBackend = [];
 
-                if (filtro === "todas" || categoria === filtro) {
-                    fila.style.display = "";
-                } else {
-                    fila.style.display = "none";
-                }
-            });
-        }
+        rows.forEach(row => {
+            // Obtenemos el ID del jugador desde la primera celda
+            const id = row.cells[0].textContent;
+            
+            // Buscamos el input de la fecha dentro de la fila
+            const fechaInput = row.querySelector('.fecha-input');
+            const fecha = fechaInput.value; // El valor será 'AAAA-MM-DD'
 
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const rows = document.querySelectorAll('#userTableBody tr');
-
-            rows.forEach(row => {
-                const userId = row.cells[0].textContent;
-                const savedStatus = localStorage.getItem(`asistencia_${userId}`);
-                const statusSpan = row.querySelector('.status');
-                const button = row.querySelector('.status-btn');
-
-                if (savedStatus === "inasistencia") {
-                    statusSpan.textContent = "Inasistencia";
-                    button.textContent = "❌";
-                    button.classList.remove("asistio");
-                    button.classList.add("inasistencia");
-                } else {
-                    statusSpan.textContent = "Asistio";
-                    button.textContent = "✅";
-                    button.classList.remove("inasistencia");
-                    button.classList.add("asistio");
-                }
-            });
-
+            // SOLO añadimos al listado si el usuario realmente seleccionó una fecha
+            if (fecha) {
+                datosParaBackend.push({
+                    id: parseInt(id, 10), // Convertimos el ID a número
+                    fecha: fecha
+                });
+            }
         });
 
-    </script>
+        if (datosParaBackend.length === 0) {
+            alert("No has asignado ninguna fecha a los jugadores.");
+            return;
+        }
 
+        // Mostramos en la consola el objeto JSON listo para ser enviado
+        console.log("Datos listos para enviar al backend:");
+        console.log(JSON.stringify(datosParaBackend, null, 2)); // El 'null, 2' lo formatea para que se vea bonito
+
+        alert(`Se han preparado los datos de ${datosParaBackend.length} jugadores. ¡Revisa la consola para ver el JSON!`);
+    }
+
+    /**
+     * Filtra los jugadores por categoría llamando a la función de carga.
+     */
+    function filtrarPorCategoria() {
+        const filtro = document.getElementById("categoriaFiltro").value;
+        cargarJugadores(filtro);
+    }
+    
+    // --- Funciones del Modal para editar Nombre/Categoría (se mantienen igual) ---
+    function openEditModal(button) {
+        currentRow = button.closest('tr');
+        const name = currentRow.cells[1].textContent;
+        const categoria = currentRow.cells[2].textContent;
+
+        document.getElementById('editName').value = name;
+        document.getElementById('editEmail').value = ''; // Este campo podría removerse del modal
+        document.getElementById('editRole').value = categoria;
+
+        document.getElementById('editModal').style.display = 'block';
+    }
+
+    function closeEditModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+
+    function saveChanges() {
+        const name = document.getElementById('editName').value;
+        const categoria = document.getElementById('editRole').value;
+        currentRow.cells[1].textContent = name;
+        currentRow.cells[2].textContent = categoria;
+        closeEditModal();
+        // NOTA: Para guardar estos cambios permanentemente, también se necesitaría una llamada al backend.
+    }
+
+    // --- Carga inicial de datos al abrir la página ---
+    window.addEventListener('DOMContentLoaded', () => {
+        cargarJugadores();
+    });
+</script>
     <div class="modal" id="logoutModal">
         <div class="modal-content">
             <h2>Confirmar Cierre de Sesión</h2>
