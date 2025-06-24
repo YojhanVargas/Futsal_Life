@@ -45,7 +45,26 @@ const actualizarPerfil = (req, res) => {
   });
 };
 
+const actualizarFotoPerfil = (req, res) => {
+  const Id_Usuario = req.usuario.id;
+  const fotoPath = req.file?.filename;
+
+  if (!fotoPath) {
+    return res.status(400).json({ mensaje: 'No se envió ninguna imagen' });
+  }
+
+  const query = 'UPDATE perfil SET Foto_Perfil = ? WHERE Id_Usuario = ?';
+  db.query(query, [fotoPath, Id_Usuario], (err) => {
+    if (err) {
+      console.error('Error al guardar la imagen:', err);
+      return res.status(500).json({ mensaje: 'Error al guardar la imagen' });
+    }
+    res.json({ mensaje: 'Imagen actualizada', filename: fotoPath });
+  });
+};
+
 module.exports = {
   obtenerPerfil,
-  actualizarPerfil
+  actualizarPerfil,
+  actualizarFotoPerfil
 };
