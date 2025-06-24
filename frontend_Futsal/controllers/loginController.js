@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
 
+
     // --- SECCIÓN 1: DECLARACIÓN DE VARIABLES DEL DOM ---
     
     // Contenedores y Cajas Traseras (para la animación)

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listados de asistencia</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 18px;
+    }
+    table th,
+    table td {
+      padding: 12px 15px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+    table th {
+      background-color: #4a90e2;
+      color: white;
+    }
+    table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    .action-buttons {
+      text-align: center;
+    }
+    button {
+      padding: 8px 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button.edit-btn {
+      background-color: #4a90e2;
+      color: white;
+    }
+    button.status-btn {
+      background-color: #ffcc66;
+      color: black;
+    }
+    .status-btn.asistio {
+      background-color: #28a745;
+      color: white;
+    }
+    .status-btn.inasistencia {
+      background-color: #dc3545;
+      color: white;
+    }
+    #guardarBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <img src="../css/image/logo-light-transparent.png" alt="Logo app">
+    </div>
+    <nav>
+      <a href="../views/indexJugador.html">INICIO</a>
+      <a href="../views/ConvocatoriaJugador.html">CONVOCATORIAS</a>
+  
+    </nav>
+    <div class="header-icons">
+      <a href="editProfileJugador.html"><img id="header-profile-icon" src="../css/image/icon-profile.png" alt="Perfil"
+         style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
+        </a>
+    </div>
+    <div class="contact-info">
+            <a href="#" class="contact-button" id="logoutBtn">Cerrar Sesión</a>
+        </div>
+  </header>
+
+  <section class="reviews-section">
+    <div class="title">Listado de asistencia</div>
+    <div style="text-align: center; margin: 20px;">
+      <label for="categoriaFiltro"><strong>Filtrar por categoría:</strong></label>
+      <select id="categoriaFiltro" style="padding: 8px; font-size: 16px;">
+        <option value="todas">Todas</option>
+        <option value="Prejuvenil">Prejuvenil</option>
+        <option value="Unica/Mayores">Unica/Mayores</option>
+        <option value="Juvenil">Juvenil</option>
+        <option value="Iniciacion">Iniciacion</option>
+      </select>
+      <label for="fechaFiltro"><strong>Fecha:</strong></label>
+      <input type="date" id="fechaFiltro" />
+      <button onclick="cargarDesdeBackend()">Buscar</button>
+    </div>
+  </section>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Categoria</th>
+        <th>Asistencia</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="userTableBody"></tbody>
+  </table>
+
+  <button id="guardarBtn" onclick="guardarAsistencia()">Guardar Listado</button>
+
+  <script>
+    const userRole = localStorage.getItem('userRole');
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const columnaAccionesHeader = document.querySelector('th:nth-child(6)');
+        const botonGuardar = document.getElementById('guardarBtn');
+
+        if (userRole && userRole.toLowerCase() === 'jugador') {
+            if (columnaAccionesHeader) columnaAccionesHeader.style.display = 'none';
+            if (botonGuardar) botonGuardar.style.display = 'none';
+        }
+    });
+
+    async function cargarDesdeBackend() {
+        const categoria = document.getElementById("categoriaFiltro").value;
+        const fecha = document.getElementById("fechaFiltro").value;
+
+        if (!fecha) {
+            alert("Selecciona una fecha para consultar");
+            return;
+        }
+
+        try {
+            const res = await fetch(`http://localhost:3000/api/asistencia?fecha=${fecha}&categoria=${categoria}`);
+            const json = await res.json();
+
+            if (!Array.isArray(json)) {
+                console.error("Respuesta inesperada del servidor:", json);
+                return;
+            }
+
+            const tbody = document.getElementById("userTableBody");
+            tbody.innerHTML = "";
+
+            json.forEach(usuario => {
+                const fila = document.createElement("tr");
+
+                let filaHTML = `
+                    <td>${usuario.Id_Usuario}</td>
+                    <td>${usuario.Nombre} ${usuario.Apellido}</td>
+                    <td>${usuario.Correo}</td>
+                    <td>${usuario.Categoria || ""}</td>
+                    <td><span class="status">${usuario.Asistio === 1 ? "Asistio" : "Inasistencia"}</span></td>
+                `;
+                
+                if (userRole && userRole.toLowerCase() !== 'jugador') {
+                    filaHTML += `
+                        <td class="action-buttons">
+                            <button class="status-btn ${usuario.Asistio === 1 ? "asistio" : "inasistencia"}" onclick="toggleStatus(this)">
+                                ${usuario.Asistio === 1 ? "✅" : "❌"}
+                            </button>
+                        </td>
+                    `;
+                } else {
+                    filaHTML += '<td style="display: none;"></td>';
+                }
+                
+                fila.innerHTML = filaHTML;
+                tbody.appendChild(fila);
+            });
+        } catch (err) {
+            console.error("Error cargando datos:", err);
+            alert("Hubo un error al cargar la asistencia");
+        }
+    }
+
+    function toggleStatus(button) {
+        const row = button.closest('tr');
+        const status = row.querySelector('.status');
+
+        if (status.textContent === 'Asistio') {
+            status.textContent = 'Inasistencia';
+            button.classList.remove('asistio');
+            button.classList.add('inasistencia');
+            button.textContent = '❌';
+        } else {
+            status.textContent = 'Asistio';
+            button.classList.remove('inasistencia');
+            button.classList.add('asistio');
+            button.textContent = '✅';
+        }
+    }
+
+    async function guardarAsistencia() {
+        if (userRole && userRole.toLowerCase() === 'jugador') {
+            alert('No tienes permiso para realizar esta acción.');
+            return;
+        }
+
+        const fecha = document.getElementById("fechaFiltro").value;
+        const rows = document.querySelectorAll("#userTableBody tr");
+        const data = [];
+
+        rows.forEach(row => {
+            const Id_Usuario = parseInt(row.cells[0].textContent);
+            const Asistio = row.querySelector(".status").textContent === "Asistio" ? 1 : 0;
+            data.push({ Id_Usuario, Asistio, Fecha: fecha });
+        });
+
+        const res = await fetch("http://localhost:3000/api/asistencia", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        const json = await res.json();
+        alert(json.mensaje || "Asistencia guardada");
+    }
+</script>
+      <div class="modal" id="logoutModal">
+        <div class="modal-content">
+            <h2>Confirmar Cierre de Sesión</h2>
+            <p>¿Estás seguro de que deseas cerrar sesión?</p>
+            <button class="btn" id="confirmLogoutBtn">Sí, cerrar sesión</button>
+            <button class="btn cancel" id="cancelLogoutBtn">Cancelar</button>
+        </div>
+    </div>
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>¡Estamos aquí para ayudarte!</h3>
+        <p>📅 <strong>Lunes, miércoles y Viernes:</strong> 4:30 PM - 7:00 PM</p>
+      </div>
+      <div class="footer-section">
+        <h3><img src="../css/image/logo-light-transparent.png" alt="Logo"></h3>
+        <div class="social-icons">
+          <a href="#"><img src="../css/image/faceb.png" alt="Facebook"></a>
+          <a href="#"><img src="../css/image/whats.png" alt="WhatsApp"></a>
+          <a href="#"><img src="../css/image/insta.png" alt="Instagram"></a>
+        </div>
+      </div>
+      <div class="footer-section contact-us">
+        <h3>Correo institucional:</h3>
+        <p>contactenos@lacalera-cundinamarca.gov.co</p>
+        <p>notificacionjudicial@lacalera-cundinamarca.gov.co</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Asesorado, diseñado y desarrollado por: NYS. © 2024</p>
+      <p><a href="#">Política de Privacidad</a> | <a href="#">Términos y Condiciones</a></p>
+    </div>
+  </footer>
+  <script src="../js/script.js"></script>
+</body>
+</html>

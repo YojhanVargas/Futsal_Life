@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil - Entrenador</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <style>
+    .contenido-centrado {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 70vh;
+      padding: 40px 20px;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .form-card {
+      background: var(--white);
+      padding: 30px 25px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-card h2 {
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .form-card label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+      color: var(--text);
+    }
+
+    .form-card input,
+    .form-card textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      margin-bottom: 20px;
+      outline-color: var(--accent);
+    }
+
+    .form-card textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    .form-card button {
+      width: 100%;
+      padding: 14px;
+      background-color: #79AEF2;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }
+
+    .form-card button:hover {
+      background-color: #005fcc;
+    }
+
+    .feedback {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+
+    #header-profile-icon {
+        width: 70px;
+        height: 70px;
+        cursor: pointer;
+    }
+
+    .btn-volver-link {
+      display: inline-block;
+      padding: 14px 24px;
+      background-color: #79AEF2;
+      color: #000;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s ease-in-out;
+    }
+
+    .btn-volver-link:hover {
+      background-color: #005fcc;
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .contenido-centrado {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="../css/image/logo-light-transparent.png" alt="Logo App" />
+    </div>
+    <nav>
+      <a href="../views/indexEntrenador.html">INICIO</a>
+      <a href="calendario.html">CALENDARIO</a>
+      <a href="../views/convocatoriaFuncional.html">CONVOCATORIAS</a>
+    </nav>
+    <div class="header-icons">
+      <a href="editProfile.html"><img id="header-profile-icon" src="../css/image/icon-profile.png" alt="Perfil" /></a>
+    </div>
+    <div class="contact-info">
+      <a href="#" class="contact-button" id="logoutBtn">Cerrar Sesión</a>
+    </div>
+  </header>
+
+  <!-- Contenido centrado -->
+  <main class="contenido-centrado">
+    <!-- Formulario -->
+    <div class="form-card">
+      <h2>📨 Enviar Mensaje Personalizado</h2>
+      <form id="correoForm">
+        <label for="nombre">Tu nombre</label>
+        <input type="text" id="nombre" placeholder="Ej. Julián García" required />
+
+        <label for="email">Correo del destinatario</label>
+        <input type="email" id="email" placeholder="correo@ejemplo.com" required />
+
+        <label for="contenido">Mensaje</label>
+        <textarea id="contenido" placeholder="Escribe tu mensaje aquí..." required></textarea>
+
+        <button type="submit">Enviar mensaje</button>
+        <div class="feedback" id="estadoMensaje"></div>
+      </form>
+    </div>
+
+    <!-- Botón Volver -->
+    <div style="align-self: center;">
+      <a href="../views/convocatoriaFuncional.html" class="btn-volver-link">⬅ Volver</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>¡Estamos aquí para ayudarte!</h3>
+        <p>📅 <strong>Lunes, miércoles y Viernes:</strong> 4:30 PM - 7:00 PM</p>
+      </div>
+      <div class="footer-section">
+        <h3><img src="../css/image/logo-light-transparent.png" alt="Logo" /></h3>
+        <div class="social-icons">
+          <a href="#"><img src="../css/image/faceb.png" alt="Facebook" /></a>
+          <a href="#"><img src="../css/image/whats.png" alt="WhatsApp" /></a>
+          <a href="#"><img src="../css/image/insta.png" alt="Instagram" /></a>
+        </div>
+      </div>
+      <div class="footer-section contact-us">
+        <h3>
+          Correo institucional:<br />
+          contactenos@lacalera-cundinamarca.gov.co<br />
+          notificacionjudicial@lacalera-cundinamarca.gov.co
+        </h3>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Asesorado, diseñado y desarrollado por: NYS. © 2024</p>
+      <p><a href="#">Política de Privacidad</a> | <a href="#">Términos y Condiciones</a></p>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    document.getElementById('correoForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const nombreRemitente = document.getElementById('nombre').value;
+      const destinatario = document.getElementById('email').value;
+      const contenido = document.getElementById('contenido').value;
+
+      try {
+        const res = await fetch('http://localhost:3000/api/mensajes/enviar-correo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nombreRemitente, destinatario, contenido })
+        });
+
+        const data = await res.json();
+        const estado = document.getElementById('estadoMensaje');
+
+        if (res.ok) {
+          estado.textContent = '✅ Correo enviado exitosamente.';
+          estado.className = 'feedback success';
+          document.getElementById('correoForm').reset();
+        } else {
+          estado.textContent = `❌ Error: ${data.error || 'No se pudo enviar el correo.'}`;
+          estado.className = 'feedback error';
+        }
+      } catch (err) {
+        document.getElementById('estadoMensaje').textContent = '❌ Error al conectar con el servidor.';
+        document.getElementById('estadoMensaje').className = 'feedback error';
+      }
+    });
+  </script>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>

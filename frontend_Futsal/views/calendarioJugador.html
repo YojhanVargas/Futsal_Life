@@ -170,10 +170,10 @@
         </div>
         <nav>
             <a href="../views/indexJugador.html">INICIO</a>
-            <a href="../views/petsV.html">CONVOCATORIAS</a>
+            <a href="../views/ConvocatoriaJugador.html">CONVOCATORIAS</a>
         </nav>
         <div class="header-icons">
-            <a href="../views/profileV.html"><img id="header-profile-icon" src="../css/image/icon-profile.png"
+            <a href="../views/editProfileJugador.html"><img id="header-profile-icon" src="../css/image/icon-profile.png"
                     alt="Perfil"></a>
         </div>
         <div class="contact-info">
@@ -199,24 +199,7 @@
                 <li class="event" style="background-color: #F44336;" draggable="true">Eventos cultural</li>
                 <li class="event" style="background-color: #2196F3;" draggable="true">Buscar fecha </li>
             </ul>
-            <div id="create-event-container">
-                <h3>Crear Evento</h3>
-                <input type="text" id="new-event-name" placeholder="Título Evento">
-                <p id="event-error" style="color: red; display: none; margin-top: -5px; font-size: 14px;">Por favor
-                    escribe un título para el evento.</p>
-
-                <select id="new-event-color">
-                    <option value="#4CAF50">Verde</option>
-                    <option value="#FF9800">Naranja</option>
-                    <option value="#F44336">Rojo</option>
-                    <option value="#2196F3">Azul</option>
-                    <option value="#9C27B0">Morado</option>
-                    <option value="#00BCD4">Cyan</option>
-                    <option value="#FFC107">Amarillo</option>
-                    <option value="#E91E63">Rosa</option>
-                </select>
-                <button id="add-event">Agregar</button>
-            </div>
+            
         </div>
 
         <div id="calendar-table-container">
@@ -274,6 +257,19 @@
             <p><a href="#">Política de Privacidad</a> | <a href="#">Términos y Condiciones</a></p>
         </div>
         <script>
+            document.getElementById('logoutBtn').addEventListener('click', function(event) {
+                event.preventDefault(); // Evita la redirección inmediata
+                document.getElementById('logoutModal').style.display = 'flex';
+            });
+
+            document.getElementById('confirmLogoutBtn').addEventListener('click', function() {
+                // Redirige al usuario a la página de inicio (index.html)
+                window.location.href = 'index.html';
+            });
+
+            document.getElementById('cancelLogoutBtn').addEventListener('click', function() {
+                document.getElementById('logoutModal').style.display = 'none';
+            });
             function crearEvento(nombre, color) {
                 const li = document.createElement("li");
                 li.className = "event";

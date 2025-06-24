@@ -336,14 +336,15 @@ p1:hover::after {
     color: #333; /* Color de texto oscuro para descripciones */
     line-height: 1.5; /* Espaciado entre líneas para mejor legibilidad */
 }
+
 /* Footer */
 footer {
     bottom: 0;
     left: 0;
     width: 100%;
-    margin-top: 15%;
+    margin-top: 25%;
     background-color: #4a91e277;
-    padding: 5px 0; /* Reducir el padding para hacer el footer más compacto */
+    padding: 0px 0; /* Reducir el padding para hacer el footer más compacto */
     color: #fff;
     font-family: 'Arial', sans-serif;
 }
@@ -1036,3 +1037,68 @@ input[type="radio"]:checked + .paw-icon {
 .paw-icon.active {
     color: orange;
   }
+  /* --- Estilos para la Página de Recuperar Contraseña --- */
+
+/* Contenedor principal que envuelve todo el formulario */
+.recovery-container {
+    max-width: 500px; /* Ancho máximo del contenedor */
+    margin: 66px auto; /* Centra el contenedor horizontalmente y le da espacio vertical */
+    padding: 40px; /* Espacio interno */
+    background-color: #ffffff; /* Fondo blanco */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Sombra suave para un efecto elevado */
+    text-align: center; /* Centra el texto de los elementos internos */
+}
+
+/* Contenedor del título H2 */
+.recovery-title-container h2 {
+    color: #4a90e2; /* Color azul principal de tu marca */
+    font-family: 'Roboto', sans-serif;
+    font-size: 28px; /* Tamaño del título */
+    margin-top: 0;
+    margin-bottom: 30px; /* Espacio debajo del título */
+}
+
+/* Estilos para el formulario y sus elementos */
+#form-recuperar {
+    display: flex;
+    flex-direction: column; /* Apila el input y el botón verticalmente */
+}
+
+/* Estilos para los formularios de recuperación y reseteo */
+#form-recuperar input,
+#form-reset input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box; 
+}
+
+#form-recuperar button,
+#form-reset button {
+    padding: 14px;
+    background-color: #4a90e2; 
+    color: white; 
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#form-recuperar button:hover,
+#form-reset button:hover {
+    background-color: #1d6fd8; 
+}
+
+/* Estilo para el párrafo de mensaje de éxito o error */
+#mensaje {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
